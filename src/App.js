@@ -21,6 +21,8 @@ class App extends Component {
     this.setState({search: copyMovies})
   }
 
+
+
   render() {
     return (
       <div className="App">
