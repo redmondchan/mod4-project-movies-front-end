@@ -8,6 +8,7 @@ import Upcoming from './containers/UpComingContainer.js'
 import TopRated from './containers/TopRated.js'
 import Popular from './containers/PopularContainer.js'
 import Favorites from './containers/FavoritesContainer.js'
+import SignUp from './components/SignUp.js'
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 
 
@@ -60,7 +61,7 @@ class App extends Component {
         <div>
           <Router>
             <Navbar />
-            <Route exact path="/home" component={Search} />
+            <Route exact path="/" component={SignUp} />
             <Route exact path="/upcoming" render={() => <Upcoming movies={this.state.upcoming} addFavorites={this.addFavorites}/>} />
             <Route exact path="/topRated" component={() => <TopRated movies={this.state.topRated} addFavorites={this.addFavorites}/>} />
             <Route exact path="/Popular" component={() => <Popular movies={this.state.popular} addFavorites={this.addFavorites}/>} />

@@ -15,7 +15,7 @@ const link = {
 /* add the navbar component */
 const Navbar = () =>
   <div>
-    <NavLink to="/" exact style={link} activeStyle={{background: 'darkblue'}}>Home</NavLink>
+    <NavLink to="/" exact style={link} activeStyle={{background: 'darkblue'}}>SignUp</NavLink>
     <NavLink to="/Upcoming" exact style={link} activeStyle={{background: 'darkblue'}}>Upcoming</NavLink>
     <NavLink to="/topRated" exact style={link} activeStyle={{background: 'darkblue'}}>Top Rated</NavLink>
     <NavLink to="/Popular" exact style={link} activeStyle={{background: 'darkblue'}}>Popular</NavLink>
