@@ -1,7 +1,7 @@
 import React from 'react'
 import MovieCard from '../components/MovieCard'
 
-class Upcoming extends React.Component{
+class Favorites extends React.Component{
 
   render(){
 
@@ -15,4 +15,4 @@ class Upcoming extends React.Component{
   }
 }
 
-export default Upcoming
+export default Favorites
