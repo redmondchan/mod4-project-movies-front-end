@@ -9,7 +9,8 @@ import TopRated from './containers/TopRated.js'
 import Popular from './containers/PopularContainer.js'
 import Favorites from './containers/FavoritesContainer.js'
 import SignUp from './components/SignUp.js'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
+import AllMovies from './containers/AllMoviesContainer.js'
+import { BrowserRouter as Router, Route, withRouter} from 'react-router-dom'
 
 
 class App extends Component {
@@ -19,7 +20,8 @@ class App extends Component {
     upcoming: [],
     topRated: [],
     popular: [],
-    favorites: []
+    favorites: [],
+    user: {}
 
   }
 
@@ -54,23 +56,41 @@ class App extends Component {
     // }
   }
 
+  signUp = (event, newUser) => {
+    event.preventDefault()
+    fetch('http://localhost:3000/api/v1/users', {
+      method: "POST",
+      headers: {
+        "Content-Type":"application/json",
+        accepts: 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    })
+    .then(resp => resp.json())
+      .then(userData => {
+        this.setState({ user: userData }, () => {
+          localStorage.setItem("token", userData.name);
+          this.props.history.push("/AllMovies");
+        })
+      })
+  }
+
   render() {
-    console.log(this.state)
+    console.log(this.state.user)
     return (
       <div className="App">
         <div>
-          <Router>
             <Navbar />
-            <Route exact path="/" component={SignUp} />
-            <Route exact path="/upcoming" render={() => <Upcoming movies={this.state.upcoming} addFavorites={this.addFavorites}/>} />
-            <Route exact path="/topRated" component={() => <TopRated movies={this.state.topRated} addFavorites={this.addFavorites}/>} />
-            <Route exact path="/Popular" component={() => <Popular movies={this.state.popular} addFavorites={this.addFavorites}/>} />
-            <Route exact path="/Favorites" component={() => <Favorites movies={this.state.favorites} addFavorites={this.addFavorites}/>} />
-          </Router >
+            <Route exact path="/" component={() => <SignUp onSubmit={this.signUp}/>} />
+            <Route exact path="/AllMovies" render={() => <AllMovies movies={this.state.search} addFavorites={this.addFavorites} user={this.state.user}/>} />
+            <Route exact path="/upcoming" render={() => <Upcoming movies={this.state.upcoming} addFavorites={this.addFavorites} user={this.state.user}/>} />
+            <Route exact path="/topRated" render={() => <TopRated movies={this.state.topRated} addFavorites={this.addFavorites} user={this.state.user}/>} />
+            <Route exact path="/Popular" render={() => <Popular movies={this.state.popular} addFavorites={this.addFavorites} user={this.state.user}/>} />
+            <Route exact path="/Favorites" render={() => <Favorites movies={this.state.favorites} addFavorites={this.addFavorites} user={this.state.user}/>} />
         </div>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

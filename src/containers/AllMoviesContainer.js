@@ -2,14 +2,14 @@ import React from 'react'
 import MovieCard from '../components/MovieCard'
 import { Route, Switch, withRouter } from "react-router-dom";
 
-class TopRated extends React.Component{
+class AllMovies extends React.Component{
   render(){
     let moviesArr = this.props.movies.map(movie => <MovieCard movie={movie} addFavorites={this.props.addFavorites}/> )
     return(
       <div>
       {Object.keys(this.props.user).length > 0 ? (
         <div className="row">
-          <h1>Top Rated</h1>
+          <h1>All Movies</h1>
           {moviesArr}
           </div>
       ) : this.props.history.push("/")
@@ -19,4 +19,4 @@ class TopRated extends React.Component{
   }
 }
 
-export default withRouter(TopRated)
+export default withRouter(AllMovies)
