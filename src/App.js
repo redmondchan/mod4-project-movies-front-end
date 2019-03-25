@@ -3,6 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import MovieContainer from './containers/MovieContainer'
 import Search from './containers/Search'
+import Navbar from './components/Navbar'
+import Upcoming from './containers/UpComingContainer.js'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 
 class App extends Component {
   state = {
@@ -36,11 +39,16 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.favorites)
     return (
       <div className="App">
-        <Search onSearch={this.onSearch}/>
-        <MovieContainer movies={this.state.search} addFavorites={this.addFavorites}/>
+        <div>
+          <Router>
+            <Navbar />
+            <Route exact path="/home" component={Search} />
+            <Route exact path="/upcoming" render={() => <Upcoming movies={this.state.search} addFavorites={this.addFavorites}/>} />
+            <Route exact path="/login" component={Search} />
+          </Router >
+        </div>
       </div>
     );
   }
