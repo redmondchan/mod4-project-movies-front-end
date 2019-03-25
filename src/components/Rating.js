@@ -27,7 +27,6 @@ class Rating extends React.Component{
 
 
   render(){
-    console.log(this.state)
     return(
       <div style={{fontSize: 32}}>
           <h2>Rate:</h2>

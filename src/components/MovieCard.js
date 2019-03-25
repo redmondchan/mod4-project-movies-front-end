@@ -3,9 +3,6 @@ import Rating from './Rating'
 
 class MovieCard extends React.Component{
 
-  handleRatingClick = () => {
-
-  }
   render(){
     return(
       <div className="column">
@@ -13,7 +10,7 @@ class MovieCard extends React.Component{
           <img src={`http://image.tmdb.org/t/p/w185/${this.props.movie.poster_path}`}/>
           <h4>{this.props.movie.title}</h4>
           <Rating movie={this.props.movie}/>
-          <button></button>
+          <button onClick={ () => this.props.addFavorites(this.props.movie)}>Add to Favorites</button>
         </div>
       </div>
     )
