@@ -3,8 +3,21 @@ import MovieCard from '../components/MovieCard'
 import { Route, Switch, withRouter } from "react-router-dom";
 
 class AllMovies extends React.Component{
+  state = {
+    movies: []
+  }
+
+  componentDidMount(){
+    Object.keys(this.props.user).length > 0 ?
+    fetch('http://localhost:3000/api/v1/movies')
+    .then(resp => resp.json())
+    .then(json => this.setState({movies: json}))
+    : this.props.history.push('/')
+  }
+
   render(){
-    let moviesArr = this.props.movies.map(movie => <MovieCard movie={movie} addFavorites={this.props.addFavorites} user={this.props.user}/> )
+    console.log(this.props.user)
+    let moviesArr = this.state.movies.map(movie => <MovieCard movie={movie} addFavorites={this.props.addFavorites} user={this.props.user}/> )
     return(
       <div>
       {Object.keys(this.props.user).length > 0 ? (

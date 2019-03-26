@@ -7,12 +7,20 @@ class Rating extends React.Component{
     set: false
   }
 
-  componentDidMount(){
-    fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`)
-    .then(resp => resp.json())
-    // .then(console.log)
-    .then(json => this.setState({rating: json.user_movies.length > 0 ? json.user_movies.find(movie => movie.movie_id == this.props.movie.id).rating: 0}))
-  }
+  // componentDidMount(){
+  //   let token = localStorage.token;
+  //   fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "content-type": "application/json",
+  //       accepts: "application/json",
+  //       Authorization: `${token}`
+  //     }
+  //   })
+  //   .then(resp => resp.json())
+  //   // .then(console.log)
+  //   .then(json => this.setState({rating: json.user_movies.length > 0 ? json.user_movies.find(movie => movie.movie_id == this.props.movie.id).rating: 0}))
+  // }
 
 
   onStarHover = (nextValue, prevValue, name) => {

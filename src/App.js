@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import MovieContainer from './containers/MovieContainer'
 import Search from './containers/Search'
@@ -15,43 +14,84 @@ import {Route, withRouter} from 'react-router-dom'
 
 class App extends Component {
   state = {
-    movies: [],
-    search: [],
-    upcoming: [],
-    topRated: [],
-    popular: [],
-    favorites: [],
     user: {}
-
   }
+
+  componentDidMount = () => {
+  let token = localStorage.token;
+  token
+    ? fetch("http://localhost:3000/api/v1/current_user", {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(resp => resp.json())
+        .then(user => {
+          this.setState({ user }, () => {
+            console.log(user);
+            this.props.history.push("/AllMovies");
+          });
+        })
+    : this.props.history.push("/");
+};
 
   // componentDidMount(){
-  //   if (Object.keys(this.state.user).length > 0){
-  //     fetch('http://localhost:3000/api/v1/movies')
-  //     .then(resp => resp.json())
-  //     .then(json => this.setState({
-  //       movies: json,
-  //       search: json,
-  //       upcoming: json.filter(movie => movie.category == "upcoming"),
-  //       nowPlaying: json.filter(movie => movie.category == "now_playing"),
-  //       topRated: json.filter(movie => movie.category == "top_rated"),
-  //       popular: json.filter(movie => movie.category == "popular")
-  //     }))
-  //   }
-  // }
+  //   let token = localStorage.token;
+  //   token ?
+  //     fetch("http://localhost:3000/api/v1/current_user", {
+  //       method: "GET",
+  //       headers: {
+  //         "content-type": "application/json",
+  //         accepts: "application/json",
+  //         Authorization: `${token}`
+  //       }
+  //     })
+  //       .then(resp => resp.json())
+  //       .then(user => {
+  //         this.setState({ user: user }, () => {
+  //           fetch('http://localhost:3000/api/v1/movies')
+  //           .then(resp => resp.json())
+  //           .then(json => this.setState({
+  //             movies: json,
+  //             search: json,
+  //             upcoming: json.filter(movie => movie.category == "upcoming"),
+  //             nowPlaying: json.filter(movie => movie.category == "now_playing"),
+  //             topRated: json.filter(movie => movie.category == "top_rated"),
+  //             popular: json.filter(movie => movie.category == "popular")
+  //           })),
+  //           this.props.history.push("/AllMovies");
+  //         });
+  //       })
+  //       : this.props.history.push("/");
+  //         if (Object.keys(this.state.user).length > 0){
+  //         fetch('http://localhost:3000/api/v1/movies')
+  //         .then(resp => resp.json())
+  //         .then(json => this.setState({
+  //           movies: json,
+  //           search: json,
+  //           upcoming: json.filter(movie => movie.category == "upcoming"),
+  //           nowPlaying: json.filter(movie => movie.category == "now_playing"),
+  //           topRated: json.filter(movie => movie.category == "top_rated"),
+  //           popular: json.filter(movie => movie.category == "popular")
+  //         }))
+  //       }
+  //     }
 
-  fetch = () => {
-    fetch('http://localhost:3000/api/v1/movies')
-        .then(resp => resp.json())
-        .then(json => this.setState({
-          movies: json,
-          search: json,
-          upcoming: json.filter(movie => movie.category == "upcoming"),
-          nowPlaying: json.filter(movie => movie.category == "now_playing"),
-          topRated: json.filter(movie => movie.category == "top_rated"),
-          popular: json.filter(movie => movie.category == "popular")
-        }))
-  }
+  // componentDidMount(){
+  //   fetch('http://localhost:3000/api/v1/movies')
+  //   .then(resp => resp.json())
+  //   .then(json => this.setState({
+  //     movies: json,
+  //     search: json,
+  //     upcoming: json.filter(movie => movie.category == "upcoming"),
+  //     nowPlaying: json.filter(movie => movie.category == "now_playing"),
+  //     topRated: json.filter(movie => movie.category == "top_rated"),
+  //     popular: json.filter(movie => movie.category == "popular")
+  //   }))
+  // }
 
   onSearch = (input) => {
     let copyMovies = [...this.state.movies].filter(movie => movie.title.toLowerCase().includes(input.toLowerCase()))
@@ -79,11 +119,10 @@ class App extends Component {
     .then(resp => resp.json())
       .then(userData => {
         this.setState({ user: userData }, () => {
-          localStorage.setItem("token", userData.name);
+          localStorage.setItem("token", userData.jwt);
           this.props.history.push("/AllMovies");
         })
       })
-      this.fetch()
   }
 
   logIn = (event, userInfo) => {
@@ -96,17 +135,17 @@ class App extends Component {
         },
         body: JSON.stringify({ user: userInfo })
       })
-      .then(resp => resp.json())
+        .then(resp => resp.json())
         .then(userData => {
           this.setState({ user: userData }, () => {
-            localStorage.setItem("token", userData.name);
+            localStorage.setItem("token", userData.jwt);
             this.props.history.push("/AllMovies");
           })
         })
     };
 
   render() {
-    console.log(this.state)
+    console.log(this.state.user)
     return (
       <div className="App">
         <div>
