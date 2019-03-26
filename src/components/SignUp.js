@@ -3,7 +3,7 @@ import React from 'react'
 class SignUp extends React.Component{
   state = {
     name: "",
-    password_digest: ""
+    password: ""
   }
 
   onChange = (event) => {
@@ -51,7 +51,7 @@ class SignUp extends React.Component{
                              <input placeholder="Username" value={this.state.input} name="name" onChange={this.onChange}></input>
                         </div>
                         <div class="form-group">
-                            <input placeholder="Password" value={this.state.input} name="password_digest" onChange={this.onChange}></input>
+                            <input placeholder="Password" value={this.state.input} name="password" onChange={this.onChange}></input>
                         </div>
                         <div class="form-group">
                             <button class="btnSubmit">Sign Up</button>
@@ -60,7 +60,7 @@ class SignUp extends React.Component{
                 </div>
                 <div class="col-md-6 login-form-2">
                     <h3>Login</h3>
-                    <form>
+                    <form onSubmit={(event) => this.props.logIn(event, this.state)}>
                         <div class="form-group">
                             <input placeholder="Username" value={this.state.input} name="name" onChange={this.onChange}></input>
                         </div>

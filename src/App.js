@@ -10,7 +10,7 @@ import Popular from './containers/PopularContainer.js'
 import Favorites from './containers/FavoritesContainer.js'
 import SignUp from './components/SignUp.js'
 import AllMovies from './containers/AllMoviesContainer.js'
-import { BrowserRouter as Router, Route, withRouter} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom'
 
 
 class App extends Component {
@@ -25,17 +25,32 @@ class App extends Component {
 
   }
 
-  componentDidMount(){
+  // componentDidMount(){
+  //   if (Object.keys(this.state.user).length > 0){
+  //     fetch('http://localhost:3000/api/v1/movies')
+  //     .then(resp => resp.json())
+  //     .then(json => this.setState({
+  //       movies: json,
+  //       search: json,
+  //       upcoming: json.filter(movie => movie.category == "upcoming"),
+  //       nowPlaying: json.filter(movie => movie.category == "now_playing"),
+  //       topRated: json.filter(movie => movie.category == "top_rated"),
+  //       popular: json.filter(movie => movie.category == "popular")
+  //     }))
+  //   }
+  // }
+
+  fetch = () => {
     fetch('http://localhost:3000/api/v1/movies')
-    .then(resp => resp.json())
-    .then(json => this.setState({
-      movies: json,
-      search: json,
-      upcoming: json.filter(movie => movie.category == "upcoming"),
-      nowPlaying: json.filter(movie => movie.category == "now_playing"),
-      topRated: json.filter(movie => movie.category == "top_rated"),
-      popular: json.filter(movie => movie.category == "popular")
-    }))
+        .then(resp => resp.json())
+        .then(json => this.setState({
+          movies: json,
+          search: json,
+          upcoming: json.filter(movie => movie.category == "upcoming"),
+          nowPlaying: json.filter(movie => movie.category == "now_playing"),
+          topRated: json.filter(movie => movie.category == "top_rated"),
+          popular: json.filter(movie => movie.category == "popular")
+        }))
   }
 
   onSearch = (input) => {
@@ -68,6 +83,7 @@ class App extends Component {
           this.props.history.push("/AllMovies");
         })
       })
+      this.fetch()
   }
 
   logIn = (event, userInfo) => {
@@ -80,15 +96,17 @@ class App extends Component {
         },
         body: JSON.stringify({ user: userInfo })
       })
-        .then(resp => resp.json())
-        .then(
-          userData => this.setState({ user: userData.user }),
-          () => this.props.history.push("/AllMovies")
-        );
+      .then(resp => resp.json())
+        .then(userData => {
+          this.setState({ user: userData }, () => {
+            localStorage.setItem("token", userData.name);
+            this.props.history.push("/AllMovies");
+          })
+        })
     };
 
   render() {
-    console.log(this.state.user)
+    console.log(this.state)
     return (
       <div className="App">
         <div>
