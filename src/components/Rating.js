@@ -7,6 +7,14 @@ class Rating extends React.Component{
     set: false
   }
 
+  componentDidMount(){
+    fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`)
+    .then(resp => resp.json())
+    // .then(console.log)
+    .then(json => this.setState({rating: json.user_movies.length > 0 ? json.user_movies.find(movie => movie.movie_id == this.props.movie.id).rating: 0}))
+  }
+
+
   onStarHover = (nextValue, prevValue, name) => {
     if(this.state.set){
     } else {
@@ -23,10 +31,19 @@ class Rating extends React.Component{
 
   onStarClick = (nextValue, prevValue, name) => {
      this.setState({set: true, rating: nextValue});
+     fetch('http://localhost:3000/api/v1/user_movies', {
+       method: 'POST',
+       headers: {
+         "Content-Type":"application/json",
+         accepts: 'application/json'
+       },
+       body: JSON.stringify({rating: this.state.rating, user_id: this.props.user.id , movie_id: this.props.movie.id})
+     })
   }
 
 
   render(){
+    console.log(this.state.rating)
     return(
       <div style={{fontSize: 32}}>
           <h2>Rate:</h2>

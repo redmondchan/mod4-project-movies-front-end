@@ -49,11 +49,6 @@ class App extends Component {
     let copyFavorites = [...this.state.favorites]
     copyFavorites.find(movieObj => movieObj == movie) ? copyFavorites=copyFavorites : copyFavorites.unshift(movie)
       this.setState({favorites: copyFavorites})
-    // if (copyFavorites.find(movieObj => movieObj == movie)){
-    // } else {
-    //   copyFavorites.unshift(movie)
-    //   this.setState({favorites: copyFavorites})
-    // }
   }
 
   signUp = (event, newUser) => {
@@ -75,13 +70,30 @@ class App extends Component {
       })
   }
 
+  logIn = (event, userInfo) => {
+    event.preventDefault()
+      fetch("http://localhost:3000/api/v1/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accepts: "application/json"
+        },
+        body: JSON.stringify({ user: userInfo })
+      })
+        .then(resp => resp.json())
+        .then(
+          userData => this.setState({ user: userData.user }),
+          () => this.props.history.push("/AllMovies")
+        );
+    };
+
   render() {
     console.log(this.state.user)
     return (
       <div className="App">
         <div>
             <Navbar />
-            <Route exact path="/" component={() => <SignUp onSubmit={this.signUp}/>} />
+            <Route exact path="/" component={() => <SignUp signUp={this.signUp} logIn={this.logIn}/>} />
             <Route exact path="/AllMovies" render={() => <AllMovies movies={this.state.search} addFavorites={this.addFavorites} user={this.state.user}/>} />
             <Route exact path="/upcoming" render={() => <Upcoming movies={this.state.upcoming} addFavorites={this.addFavorites} user={this.state.user}/>} />
             <Route exact path="/topRated" render={() => <TopRated movies={this.state.topRated} addFavorites={this.addFavorites} user={this.state.user}/>} />
