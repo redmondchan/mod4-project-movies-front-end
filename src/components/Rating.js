@@ -7,20 +7,23 @@ class Rating extends React.Component{
     set: false
   }
 
-  // componentDidMount(){
-  //   let token = localStorage.token;
-  //   fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
-  //     method: "GET",
-  //     headers: {
-  //       "content-type": "application/json",
-  //       accepts: "application/json",
-  //       Authorization: `${token}`
-  //     }
-  //   })
-  //   .then(resp => resp.json())
-  //   // .then(console.log)
-  //   .then(json => this.setState({rating: json.user_movies.length > 0 ? json.user_movies.find(movie => movie.movie_id == this.props.movie.id).rating: 0}))
-  // }
+  componentDidMount(){
+    let token = localStorage.token;
+    fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accepts: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      let x = json.user_movies.find(movie => movie.movie_id == this.props.movie.id) ? json.user_movies.find(movie => movie.movie_id == this.props.movie.id).rating : 0
+      this.setState({rating: x})
+    })
+  }
+
 
 
   onStarHover = (nextValue, prevValue, name) => {
@@ -38,20 +41,21 @@ class Rating extends React.Component{
   }
 
   onStarClick = (nextValue, prevValue, name) => {
+    let token = localStorage.token
      this.setState({set: true, rating: nextValue});
      fetch('http://localhost:3000/api/v1/user_movies', {
        method: 'POST',
        headers: {
          "Content-Type":"application/json",
-         accepts: 'application/json'
+         accepts: 'application/json',
+         Authorization: `Bearer ${token}`
        },
-       body: JSON.stringify({rating: this.state.rating, user_id: this.props.user.id , movie_id: this.props.movie.id})
+       body: JSON.stringify({movie: {rating: this.state.rating, user_id: this.props.user.id , movie_id: this.props.movie.id}})
      })
   }
 
 
   render(){
-    console.log(this.state.rating)
     return(
       <div style={{fontSize: 32}}>
           <h2>Rate:</h2>

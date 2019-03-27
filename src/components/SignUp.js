@@ -23,7 +23,6 @@ class SignUp extends React.Component{
   }
 
   render(){
-    console.log(this.state)
     return(
       // <div>
       //   <div>
@@ -42,33 +41,33 @@ class SignUp extends React.Component{
       //   </div>
       // </div>
 
-<div class="container login-container">
-            <div class="row">
-                <div class="col-md-6 login-form-1">
+<div className="container login-container">
+            <div className="row">
+                <div className="col-md-6 login-form-1">
                     <h3>Sign Up</h3>
                     <form onSubmit={(event) => this.props.signUp(event, this.state)}>
-                        <div class="form-group">
+                        <div className="form-group">
                              <input placeholder="Username" value={this.state.input} name="name" onChange={this.onChange}></input>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <input placeholder="Password" value={this.state.input} name="password" onChange={this.onChange}></input>
                         </div>
-                        <div class="form-group">
-                            <button class="btnSubmit">Sign Up</button>
+                        <div className="form-group">
+                            <button className="btnSubmit">Sign Up</button>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6 login-form-2">
+                <div className="col-md-6 login-form-2">
                     <h3>Login</h3>
                     <form onSubmit={(event) => this.props.logIn(event, this.state)}>
-                        <div class="form-group">
+                        <div className="form-group">
                             <input placeholder="Username" value={this.state.input} name="name" onChange={this.onChange}></input>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <input placeholder="Password" value={this.state.input} name="password_digest" onChange={this.onChange}></input>
                         </div>
-                        <div class="form-group">
-                              <button class="btnSubmit">Login</button>
+                        <div className="form-group">
+                              <button className="btnSubmit">Login</button>
                         </div>
                     </form>
                 </div>

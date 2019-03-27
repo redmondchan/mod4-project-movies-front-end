@@ -100,10 +100,25 @@ class App extends Component {
     this.setState({search: filteredMovies})
   }
 
-  addFavorites =  (movie) => {
-    let copyFavorites = [...this.state.favorites]
-    copyFavorites.find(movieObj => movieObj == movie) ? copyFavorites=copyFavorites : copyFavorites.unshift(movie)
-      this.setState({favorites: copyFavorites})
+  // addFavorites =  (movie) => {
+  //   let copyFavorites = [...this.state.favorites]
+  //   copyFavorites.find(movieObj => movieObj == movie) ? copyFavorites=copyFavorites : copyFavorites.unshift(movie)
+  //     this.setState({favorites: copyFavorites})
+  // }
+
+  addFavorites = (movie) => {
+    let token = localStorage.token
+     fetch('http://localhost:3000/api/v1/user_movies', {
+       method: 'POST',
+       headers: {
+         "Content-Type":"application/json",
+         accepts: 'application/json',
+         Authorization: `Bearer ${token}`
+       },
+       body: JSON.stringify({movie: { user_id: this.state.user.user.id , movie_id: movie.id, favorites: true}})
+     })
+     .then(resp => resp.json())
+     .then(console.log)
   }
 
   signUp = (event, newUser) => {
@@ -144,18 +159,22 @@ class App extends Component {
         })
     };
 
+    signOut = () => {
+      localStorage.removeItem("token")
+      this.props.history.push("/")
+    }
+
   render() {
-    console.log(this.state.user)
     return (
       <div className="App">
         <div>
-            <Navbar />
-            <Route exact path="/" component={() => <SignUp signUp={this.signUp} logIn={this.logIn}/>} />
+            <Navbar signOut={this.signOut}/>
+            <Route exact path="/" render={() => <SignUp signUp={this.signUp} logIn={this.logIn}/>} />
             <Route exact path="/AllMovies" render={() => <AllMovies movies={this.state.search} addFavorites={this.addFavorites} user={this.state.user}/>} />
             <Route exact path="/upcoming" render={() => <Upcoming movies={this.state.upcoming} addFavorites={this.addFavorites} user={this.state.user}/>} />
             <Route exact path="/topRated" render={() => <TopRated movies={this.state.topRated} addFavorites={this.addFavorites} user={this.state.user}/>} />
             <Route exact path="/Popular" render={() => <Popular movies={this.state.popular} addFavorites={this.addFavorites} user={this.state.user}/>} />
-            <Route exact path="/Favorites" render={() => <Favorites movies={this.state.favorites} addFavorites={this.addFavorites} user={this.state.user}/>} />
+            <Route exact path="/Favorites" render={() => <Favorites movies={this.state.favorites} addFavorites={this.addFavorites} user={this.state.user.user}/>} />
         </div>
       </div>
     );
