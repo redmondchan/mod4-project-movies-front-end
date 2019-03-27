@@ -14,7 +14,7 @@ class TopRated extends React.Component{
     : this.props.history.push('/')
   }
   render(){
-    let moviesArr = this.state.movies.map(movie => <MovieCard movie={movie} addFavorites={this.props.addFavorites} user={this.props.user}/> )
+    let moviesArr = this.state.movies.map(movie => <MovieCard key={movie.id} movie={movie} addFavorites={this.props.addFavorites} user={this.props.user.user}/> )
     return(
       <div>
       {Object.keys(this.props.user).length > 0 ? (

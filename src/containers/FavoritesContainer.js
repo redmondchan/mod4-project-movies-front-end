@@ -4,9 +4,8 @@ import { Route, Switch, withRouter } from "react-router-dom";
 
 class Upcoming extends React.Component{
   componentDidMount(){
-    let user = this.props.user.user
     let token = localStorage.token;
-    fetch(`http://localhost:3000/api/v1/users/${user.id}`, {
+    fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -15,11 +14,13 @@ class Upcoming extends React.Component{
       }
     })
     .then(resp => resp.json())
-    .then(console.log)
+    .then(json => {
+      console.log(json.user_movies)
+      console.log(json.user_movies.filter(movie => movie.favorites))
+    })
     }
 
   render(){
-    console.log(this.props.user.user)
     // let moviesArr = this.props.movies.map(movie => <MovieCard movie={movie} addFavorites={this.props.addFavorites}/> )
     return(
       <div>
