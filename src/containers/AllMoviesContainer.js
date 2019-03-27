@@ -21,7 +21,7 @@ class AllMovies extends React.Component{
       <div>
       {Object.keys(this.props.user).length > 0 ? (
         <div className="row">
-          <h1>All Movies</h1>
+          <h1>All Movies</h1> 
           {moviesArr}
           </div>
       ) : this.props.history.push("/")

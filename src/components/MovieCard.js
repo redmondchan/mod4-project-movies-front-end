@@ -1,7 +1,7 @@
 import React from 'react'
 import Rating from './Rating'
 
-class MovieCard extends React.Component{
+class MovieCard extends React.Component{ 
 
   render(){
     return(
