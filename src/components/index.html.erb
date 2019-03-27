@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag "application" %>
+</head>
+<h1>Dogs</h1>
+<main>
+
+  <div>
+    <h2>Search by breed</h2>
+    <%= form_tag(dogs_path, method: :get) do %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", name: nil %>
+    <% end %>
+    <div class="card-container">
+     <%@dogs.each do |dog|%>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+
+    <img class="card-img-top" src="<%=dog.image_url%>" alt="dog" height="200" width="200">
+    <div class="overlay">
+    <h5 class="card-text"><%=link_to dog.name , dog_path(dog) %></h5>
+    </div>
+    </div>
+    </div>
+      <% end %>
+    </div>
+
+
+
+    </div>
+
+
+  </main>
+
+  </html>
