@@ -15,13 +15,31 @@ const link = {
 
 const Navbar = (props) =>
   <div>
-    <NavLink to="/" exact style={link} activeStyle={{background: 'darkblue'}}>SignUp</NavLink>
-    <NavLink to="/AllMovies" exact style={link} activeStyle={{background: 'darkblue'}}>All Movies</NavLink>
-    <NavLink to="/Upcoming" exact style={link} activeStyle={{background: 'darkblue'}}>Upcoming</NavLink>
-    <NavLink to="/topRated" exact style={link} activeStyle={{background: 'darkblue'}}>Top Rated</NavLink>
-    <NavLink to="/Popular" exact style={link} activeStyle={{background: 'darkblue'}}>Popular</NavLink>
-    <NavLink to="/Favorites" exact style={link} activeStyle={{background: 'darkblue'}}>Favorites</NavLink>
-    <button onClick={props.signOut}>Log out</button>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <NavLink to="/" className="nav-link">SignUp</NavLink>
+        </li>
+      <li class="nav-item">
+        <NavLink to="/AllMovies" className="nav-link">All Movies</NavLink>
+      </li>
+      <li class="nav-item">
+        <NavLink to="/Upcoming" className="nav-link">Upcoming</NavLink>
+      </li>
+      <li class="nav-item">
+        <NavLink to="/topRated" className="nav-link">Top Rated</NavLink>
+      </li>
+      <li class="nav-item">
+        <NavLink to="/Popular" className="nav-link">Popular</NavLink>
+      </li>
+      <li class="nav-item">
+        <NavLink to="/Favorites" className="nav-link">Favorites</NavLink>
+      </li>
+      <li class="nav-item">
+        <button onClick={props.signOut}>Log out</button>
+      </li>
+      </ul>
+    </nav>
   </div>;
 
 export default Navbar

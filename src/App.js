@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount = () => {
   let token = localStorage.token;
-  token
+  token && token !== undefined 
     ? fetch("http://localhost:3000/api/v1/current_user", {
         method: "GET",
         headers: {
