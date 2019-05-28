@@ -16,7 +16,7 @@ class Popular extends React.Component{
   }
 
   render(){
-    let moviesArr = this.state.movies.map(movie => <MovieCard key={movie.id} movie={movie} addFavorites={this.props.addFavorites} user={this.props.user.user}/> )
+    let moviesArr = this.state.movies.map(movie => <MovieCard key={movie.id} movie={movie} handleFavorites={this.props.addFavorites} user={this.props.user.user}/> )
     return(
       <div>
       {Object.keys(this.props.user).length > 0 ? (

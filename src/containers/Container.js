@@ -23,7 +23,7 @@ class Container extends Component {
   }
 
   componentDidMount(){
-    Object.keys(this.props.user).length > 0 ?
+    localStorage.token ?
       fetch('http://localhost:3000/api/v1/movies')
       .then(resp => resp.json())
       .then(json => this.setState({
