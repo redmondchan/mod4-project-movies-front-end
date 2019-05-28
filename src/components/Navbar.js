@@ -17,27 +17,24 @@ const Navbar = (props) =>
   <div>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <NavLink to="/" className="nav-link">SignUp</NavLink>
+        <li class="nav-item">
+          <NavLink to="/AllMovies" className="nav-link">All Movies</NavLink>
         </li>
-      <li class="nav-item">
-        <NavLink to="/AllMovies" className="nav-link">All Movies</NavLink>
-      </li>
-      <li class="nav-item">
-        <NavLink to="/Upcoming" className="nav-link">Upcoming</NavLink>
-      </li>
-      <li class="nav-item">
-        <NavLink to="/topRated" className="nav-link">Top Rated</NavLink>
-      </li>
-      <li class="nav-item">
-        <NavLink to="/Popular" className="nav-link">Popular</NavLink>
-      </li>
-      <li class="nav-item">
-        <NavLink to="/Favorites" className="nav-link">Favorites</NavLink>
-      </li>
-      <li class="nav-item">
-        <button onClick={props.signOut}>Log out</button>
-      </li>
+        <li class="nav-item">
+          <NavLink to="/Upcoming" className="nav-link">Upcoming</NavLink>
+        </li>
+        <li class="nav-item">
+          <NavLink to="/topRated" className="nav-link">Top Rated</NavLink>
+        </li>
+        <li class="nav-item">
+          <NavLink to="/Popular" className="nav-link">Popular</NavLink>
+        </li>
+        <li class="nav-item">
+          <NavLink to="/Favorites" className="nav-link">Favorites</NavLink>
+        </li>
+        <li class="nav-item">
+          {localStorage.token ? <NavLink className="nav-link" onClick={props.signOut}>Log out</NavLink> : <NavLink to="/" className="nav-link">Log In</NavLink> }
+        </li>
       </ul>
     </nav>
   </div>;

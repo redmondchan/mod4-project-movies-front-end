@@ -23,19 +23,26 @@ class Upcoming extends React.Component{
       }
     })
     .then(resp => resp.json())
-    .then(json => {
-      let allMovies = [...this.state.movies]
-      let newFavoriteMovies = []
-      let favoriteMovies = json.user_movies.filter(movie => movie.favorites)
-      allMovies.forEach((movie)=> favoriteMovies.forEach((jsonObj)=>{if (jsonObj.movie_id == movie.id){newFavoriteMovies.push(movie)}}))
-      let finalMovies = [...new Set(newFavoriteMovies)]
-      this.setState({favorites: finalMovies})
+    .then(json => {this.setState({favorites: json.user_movies.filter(movie => movie.favorites)})
+      // console.log(json)
+      // let allMovies = [...this.state.movies]
+      // let newFavoriteMovies = []
+      // let favoriteMovies = json.user_movies.filter(movie => movie.favorites)
+      // console.log(favoriteMovies)
+      // allMovies.forEach((movie)=> favoriteMovies.forEach((jsonObj)=>{if (jsonObj.movie_id == movie.id){newFavoriteMovies.push(movie)}}))
+      // let finalMovies = [...new Set(newFavoriteMovies)]
+      // this.setState({favorites: finalMovies})
     })
     }
 
   render(){
     console.log(this.state)
-    let moviesArr = this.state.favorites.map(movie => <MovieCard key={movie.id} movie={movie} addFavorites={this.props.addFavorites} user={this.props.user}/> )
+    let allMovies = [...this.state.movies]
+    let favoriteMovies = [...this.state.favorites]
+    let newFavoriteMovies = []
+    allMovies.forEach((movie)=> favoriteMovies.forEach((jsonObj)=>{if (jsonObj.movie_id == movie.id){newFavoriteMovies.push(movie)}}))
+    let finalMovies = [...new Set(newFavoriteMovies)]
+    let moviesArr = finalMovies.map(movie => <MovieCard key={movie.id} movie={movie} addFavorites={this.props.addFavorites} user={this.props.user}/> )
     return(
       <div>
       {Object.keys(this.props.user).length > 0 ? (
