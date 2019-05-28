@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
+import MovieContainer from './MoviesContainer'
+import SearchBar from './SearchBar'
+import NavBar from './Nav'
+=======
+>>>>>>> k
 import './App.css';
 import MovieContainer from './containers/MovieContainer'
 import Search from './containers/Search'
@@ -13,6 +19,30 @@ import {Route, withRouter} from 'react-router-dom'
 
 
 class App extends Component {
+<<<<<<< HEAD
+
+  state = {
+    movies:[],
+    filtered:[],
+    searchTerm:''
+  }
+
+
+
+  componentDidMount(){
+    fetch('http://localhost:3000/api/v1/movies')
+        .then(res=> res.json())
+        .then(movies => this.setState({movies}))
+  }
+
+  changeHandler = e => {
+      let userInput = e.target.value
+      let newArray = [...this.state.movies]
+      let filteredArray = newArray.filter(movie => movie.title.toLowerCase().includes(userInput.toLowerCase()))
+    this.setState({filtered:filteredArray, searchTerm:userInput})
+  }
+
+=======
   state = {
     user: {}
   }
@@ -164,9 +194,16 @@ class App extends Component {
       this.props.history.push("/")
     }
 
+>>>>>>> k
   render() {
+    console.log(this.state.searchTerm)
     return (
       <div className="App">
+<<<<<<< HEAD
+            <NavBar />
+            <SearchBar changeHandler={this.changeHandler} value={this.state.searchTerm}/>
+           <MovieContainer  movies={this.state.movies} filtered={this.state.filtered}/>
+=======
         <div>
             <Navbar signOut={this.signOut}/>
             <Route exact path="/" render={() => <SignUp signUp={this.signUp} logIn={this.logIn}/>} />
@@ -176,6 +213,7 @@ class App extends Component {
             <Route exact path="/Popular" render={() => <Popular movies={this.state.popular} addFavorites={this.addFavorites} user={this.state.user}/>} />
             <Route exact path="/Favorites" render={() => <Favorites movies={this.state.favorites} addFavorites={this.addFavorites} user={this.state.user.user}/>} />
         </div>
+>>>>>>> k
       </div>
     );
   }
